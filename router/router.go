@@ -1,6 +1,9 @@
 package router
 
 import (
+	"cats-social/controllers"
+	"cats-social/database"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,6 +15,11 @@ func SetupRouter() *gin.Engine {
 			"message": "Cats Social",
 		})
 	})
+
+	database.ConnectDatabase()
+
+	router.DELETE("/v1/cat/:id", controllers.DeleteCats)
+	router.POST("/v1/cat/match/reject", controllers.RejectCat)
 
 	return router
 }
