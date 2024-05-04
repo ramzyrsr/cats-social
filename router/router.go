@@ -18,8 +18,16 @@ func SetupRouter() *gin.Engine {
 
 	database.ConnectDatabase()
 
-	router.DELETE("/v1/cat/:id", controllers.DeleteCats)
-	router.POST("/v1/cat/match/reject", controllers.RejectCat)
+	router.POST("/v1/user/register", controllers.RegisterUser)
+	router.POST("/v1/user/login", controllers.Login)
+
+	authorized := router.Group("/")
+
+	{
+		authorized.POST("/v1/cat", controllers.CreateCat)
+		authorized.DELETE("/v1/cat/:id", controllers.DeleteCats)
+		authorized.POST("/v1/cat/match/reject", controllers.RejectCat)
+	}
 
 	return router
 }
